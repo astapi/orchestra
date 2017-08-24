@@ -52,6 +52,7 @@ func _main(args []string) int {
 	}
 	go slackListener.ListenAndResponse()
 
+	http.HandleFunc("/ping", ping)
 	// Register handler to receive interactive message
 	// responses from slack (kicked by user action)
 	http.Handle("/interaction", interactionHandler{
@@ -65,4 +66,9 @@ func _main(args []string) int {
 	}
 
 	return 0
+}
+
+func ping(w http.ResponseWriter, r *http.Request) {
+	log.Println("pong")
+	w.WriteHeader(http.StatusOK)
 }
