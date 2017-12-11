@@ -2,6 +2,7 @@ package ecs
 
 import (
 	"fmt"
+
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/ecs"
@@ -45,6 +46,7 @@ func (client *ECS) UpdateTask(taskName string) (*ecs.TaskDefinition, error) {
 	input := &ecs.RegisterTaskDefinitionInput{
 		ContainerDefinitions: containerDefinitions,
 		Family:               aws.String(taskName),
+		TaskRoleArn:          taskDefinition.TaskDefinition.TaskRoleArn,
 	}
 	result, err := client.Client.RegisterTaskDefinition(input)
 	if err != nil {
